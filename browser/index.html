@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Direct Messages</title>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+  </head>
+  <body no-js on-click-remove-class=".dropdown active">
+
+    <div class="app">
+      <side class="app-sidebar app__sidebar">
+        <div class="app-search app__search">
+          <input class="app-search__input" type="text" name="search" placeholder="Search...">
+        </div>
+        <div class="app-users">
+          <ul class="app-users__list"></ul>
+        </div>
+      </side>
+      <div class="app-content app__content">
+        <div class="app-messages">
+          <div class="app-messages__header">
+            <div class="app-messages__title"></div>
+          </div>
+          <div class="app-messages__list">
+            <div class="center cover">
+              <img src="img/icon.png" width="300px">
+              <p class="italic">Search and select a chat to start.</p>
+            </div>
+          </div>
+          <div class="app-input">
+            <div class="app-input__inner">
+              <input type="text" class="app-input__control" placeholder="Type message here">
+              <div class="app-input__emoji" no-js on-click-toggle-class=".emojis hide">
+                  <img src="img/smiley.png" width="20px">
+              </div>
+            </div>
+            <div class="emojis hide">
+              <div class="emojis-header"></div>
+              <div class="emojis-body"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <button class="settings" no-js on-mouseenter-add-class=".dropdown active"></button>
+      <div class="dropdown" no-js on-mouseleave-remove-class=".dropdown active">
+        <div class="item" id="seen-flagger"
+          title="you would know when recipients read your message, but they won't know when your read theirs.'">
+          DONT SEND "SEEN" RECEIPTS
+        </div>
+        <div class="item" id="unfollowers">USERS NOT FOLLOWING BACK</div>
+        <div class="item" id="logout">LOGOUT</div>
+      </div>
+
+      <div class="viewer">
+        <button class="close" no-js on-click-remove-class=".viewer active">
+          <img width="25px" src="img/close.png" alt="close icon">
+        </button>
+        <div class="content"></div>
+      </div>
+    </div>
+  </body>
+  
+  <script type="text/javascript" src="../node_modules/nojs/dist/no.min.js"></script>
+  <script type="text/javascript" src="js/globals.js"></script>
+  <script type="text/javascript" src="js/emoji.js"></script>
+  <script type="text/javascript" src="js/carousel.js"></script>
+  <script type="text/javascript" src="js/funcs.js"></script>
+  <script type="text/javascript" src="js/renderers.js"></script>
+  <script type="text/javascript" src="js/index.js"></script>
+</html>

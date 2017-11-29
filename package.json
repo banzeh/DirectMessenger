@@ -1,0 +1,49 @@
+{
+  "name": "DM",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "pack": "build --dir",
+    "dist": "build -mwl --x64"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/da-sloysha/dm.git"
+  },
+  "author": "mamon",
+  "license": "MIT",
+  "dependencies": {
+    "bluebird": "^3.5.0",
+    "electron-log": "^2.2.6",
+    "electron-updater": "^2.8.9",
+    "fb": "^2.0.0",
+    "instagram-private-api": "^0.6.7",
+    "node-notifier": "^5.1.2",
+    "nojs": "^0.1.1"
+  },
+  "devDependencies": {
+    "electron": "^1.7.8",
+    "electron-builder": "^19.27.3"
+  },
+  "build": {
+    "publish": [
+      {
+        "provider": "github",
+        "owner": "mamon",
+        "repo": "dm"
+      }
+    ],
+    "appId": "com.mamon.dm",
+    "copyright": "Mamon 2017",
+    "asar": false,
+    "mac": {
+      "category": "public.app-category.social-networking"
+    },
+    "win": {
+      "target": "nsis",
+      "publisherName": "mamon"
+    }
+  }
+}
