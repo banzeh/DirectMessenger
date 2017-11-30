@@ -165,6 +165,9 @@ function renderChatListItem (username, msgPreview, thumbnail, id) {
 }
 
 function renderSearchResult (users) {
+
+  selectors.usersList.innerHTML = "";
+
   users.forEach((user) => {
     var li = renderChatListItem(user._params.username, 'send a message', user._params.picture);
     li.onclick = () => {
@@ -178,6 +181,7 @@ function renderSearchResult (users) {
     }
     selectors.usersList.appendChild(li);
   })
+  
 }
 
 function renderChatList(chatList) {
@@ -229,8 +233,8 @@ function renderChatHeader(account) {
 function renderChat (chat_) {
   window.chat = chat_;
 
-  var msgContainer = document.querySelector('.app-messages__list');
-  msgContainer.innerHTML = '';
+  selectors.messagesList.innerHTML = '';
+
   renderChatHeader(chat_.accounts);
   var messages = chat_.items.slice().reverse();
   messages.forEach((message) => {
@@ -240,9 +244,9 @@ function renderChat (chat_) {
     var div = renderMessage(message, direction,
       message._params.created, message._params.type
     );
-    msgContainer.appendChild(div);
+    selectors.messagesList.appendChild(div);
   })
-  renderMessageSeenText(msgContainer, chat_);
+  renderMessageSeenText(selectors.messagesList, chat_);
   scrollToChatBottom();
 
   addSubmitHandler(chat_);
@@ -250,7 +254,7 @@ function renderChat (chat_) {
 }
 
 function renderMessageSeenText (container, chat_) {
-  container.appendChild(dom(`<div class="seen italic outward"><p>${getIsSeenText(chat_)}</p></div>`));
+  container.appendChild(dom(`<div class="outward">${getIsSeenText(chat_)}</div>`));
 }
 
 function renderUnfollowers (users) {

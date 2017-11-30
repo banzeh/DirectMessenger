@@ -3,6 +3,7 @@ const selectors = {
 
   usersList: null,
 
+  messagesList: null,
   messagesTitle: null,
 }
 
@@ -33,6 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
   selectors.searchInput = document.querySelector('.app-search__input');
   selectors.usersList = document.querySelector('.app-users__list');
   selectors.messagesTitle = document.querySelector('.app-messages__title');
+  selectors.messagesList = document.querySelector('.app-messages__list');
 
   ipcRenderer.on('loggedInUser', (evt, user) => {
     window.loggedInUserId = user.id;
@@ -83,11 +85,14 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   selectors.searchInput.onkeyup = (e) => {
-    const value = searchForm.value;
-    const trimmedValue = value.trim() 
+    const value = e.target.value;
+    const trimmedValue = value.trim();
+
+    console.log(trimmedValue.length);
 
     if (trimmedValue.length > 3) {
-      ipcRenderer.send('searchUsers', searchForm.value)      
+      console.log('searching');
+      ipcRenderer.send('searchUsers', e.target.value)      
     } else if (trimmedValue.length === 0) {
       renderChatList(window.chats)
     }
