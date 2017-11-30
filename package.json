@@ -17,15 +17,15 @@
   "dependencies": {
     "bluebird": "^3.5.0",
     "electron-log": "^2.2.6",
-    "electron-updater": "^2.8.9",
+    "electron-updater": "^2.16.3",
     "fb": "^2.0.0",
     "instagram-private-api": "^0.6.7",
     "node-notifier": "^5.1.2",
     "nojs": "^0.1.1"
   },
   "devDependencies": {
-    "electron": "^1.7.8",
-    "electron-builder": "^19.27.3"
+    "electron": "^1.8.1",
+    "electron-builder": "^19.47.1"
   },
   "build": {
     "publish": [

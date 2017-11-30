@@ -11,9 +11,7 @@ const RATE_LIMIT_DELAY = 60000;
 let pollingInterval = 10000;
 let shouldNotify = false;
 
-const APP = {
-  NAME: 'Direct Messenger'
-}
+const config = require('./config');
 
 // OSX needs custom notifier for custom notification icons
 if (process.platform === 'darwin') {
@@ -34,16 +32,16 @@ let session
 function createWindow () {
   if (!mainWindow) {
     mainWindow = new BrowserWindow({
-      width: 800,
-      height: 600,
-      icon: `${__dirname}/browser/img/icon.png`,
-      minWidth: 600,
-      title: APP.NAME
+      width: config.app.width,
+      height: config.app.height,
+      icon: `${__dirname}/app/img/icon.png`,
+      minWidth: config.app.min_width,
+      title: config.app.name
     })
   }
 
   instagram.checkAuth(session).then((result) => {
-    let view = result.isLoggedIn ? 'browser/index.html' : 'browser/login.html'
+    let view = result.isLoggedIn ? 'app/index.html' : 'app/login.html'
     session = result.session || session
 
     mainWindow.loadURL(url.format({
@@ -155,10 +153,10 @@ electron.ipcMain.on('markAsRead', (evt, thread) => {
 
 electron.ipcMain.on('notify', (evt, message) => {
   // OSX uses the default terminal notifier icon
-  let icon = process.platform !== 'darwin' ? path.join(__dirname, '/browser/img/icon.png') : undefined
+  let icon = process.platform !== 'darwin' ? path.join(__dirname, '/app/img/icon.png') : undefined
   if (shouldNotify) {
     notifier.notify({
-      title: APP.NAME,
+      title: config.app.name,
       sound: true,
       message, icon,
       wait: true
