@@ -10,6 +10,8 @@
  */
 
  html {
+  overflow-x: hidden;
+  overflow-y: auto;
   line-height: 1.15; /* 1 */
   -ms-text-size-adjust: 100%; /* 2 */
   -webkit-text-size-adjust: 100%; /* 2 */
@@ -984,7 +986,7 @@ CAROUSEL
   margin: 0;
   padding: 0;
   height: calc(100vh - 70px);
-  overflow-y: scroll;
+  overflow-y: auto;
 }
 
 .app-users__item {
@@ -1054,7 +1056,7 @@ CAROUSEL
 
 .app-messages__list {
   height: calc(100vh - 140px);
-  overflow: scroll;
+  overflow: auto;
   background: rgb(240, 251, 255);
   padding: 0 15px;
 }

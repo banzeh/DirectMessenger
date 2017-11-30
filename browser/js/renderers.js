@@ -5,7 +5,8 @@ function renderMessage (message, direction, time, type) {
     like: renderMessageAsLike,
     media: renderMessageAsImage,
     reel_share: renderMessageAsUserStory, // replying to a user's story
-    link: renderMessageAsLink
+    link: renderMessageAsLink,
+    placeholder: renderMessageAsPlaceholder, // displaying unavailable stories
   }
 
   var div = dom(`<div class="app-message app-messages__item ${direction}"></div>`);
@@ -109,6 +110,12 @@ function renderMessageAsLike (container) {
   renderMessageAsImage(container, 'img/love.png');
 }
 
+function renderMessageAsPlaceholder(container, message, noContext) {
+  var text = typeof message === 'string' ? message : message.placeholder._params.message;
+  container.appendChild(document.createTextNode(text));
+  if (!noContext) container.oncontextmenu = () => renderContextMenu(text);
+}
+
 function renderMessageAsText (container, message, noContext) {
   var text = typeof message === 'string' ? message : message._params.text;
   container.appendChild(document.createTextNode(text));
@@ -156,7 +163,6 @@ function renderChatListItem (username, msgPreview, thumbnail, id) {
 
 function renderSearchResult (users) {
   var ul = document.querySelector('.app-users__list');
-  ul.innerHTML = "";
   users.forEach((user) => {
     var li = renderChatListItem(user._params.username, 'send a message', user._params.picture);
     li.onclick = () => {
