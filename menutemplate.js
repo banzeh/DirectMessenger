@@ -39,15 +39,15 @@ const template = [
     submenu: [
       {
         label: 'Learn More',
-        click () { openExternal('https://ifedapoolarewaju.github.io/igdm') }
+        click () { openExternal('https://github.com/da-sloysha/DirectMessenger/') }
       },
       {
         label: 'Report an issue',
-        click () { openExternal('https://github.com/ifedapoolarewaju/igdm/issues/new') }
+        click () { openExternal('https://github.com/da-sloysha/DirectMessenger/issues/new') }
       },
       {
         label: 'Star this project (Show us some love. 🙂)',
-        click () { openExternal('https://github.com/ifedapoolarewaju/igdm/stargazers') }
+        click () { openExternal('https://github.com/da-sloysha/DirectMessenger/stargazers') }
       }
     ]
   }
