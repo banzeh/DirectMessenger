@@ -1057,7 +1057,7 @@ CAROUSEL
 .app-messages__list {
   height: calc(100vh - 140px);
   overflow: auto;
-  background: rgb(240, 251, 255);
+  background: #fff;
   padding: 0 15px;
 }
 
