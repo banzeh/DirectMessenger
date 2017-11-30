@@ -50,11 +50,16 @@ const clearCookieFiles = () => {
 const getDevice = (username) => {
   let device;
   username = username || guessUsername();
-  if (username) device = new Client.Device(username);
+  if (username) {
+    device = new Client.Device(username);
+  }
   return device;
 }
 
 module.exports = {
-  canUseFileStorage, guessUsername,
-  getCookieStorage, clearCookieFiles, getDevice
+  canUseFileStorage,
+  guessUsername,
+  getCookieStorage,
+  clearCookieFiles,
+  getDevice
 }

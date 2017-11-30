@@ -75,12 +75,7 @@ function getChat (evt, id) {
 
 app.on('ready', () => {
   createWindow();
-  // only set the menu template when in production mode/
-  // this also leaves the dev console enabled when in dev mode.
-  if (!process.defaultApp) {
-    const menu = Menu.buildFromTemplate(menuTemplate);
-    Menu.setApplicationMenu(menu); 
-  }
+  mainWindow.setMenu(null);
 })
 
 app.on('window-all-closed', () => {

@@ -6,26 +6,22 @@ function renderMessage (message, direction, time, type) {
     media: renderMessageAsImage,
     reel_share: renderMessageAsUserStory, // replying to a user's story
     link: renderMessageAsLink,
-    placeholder: renderMessageAsPlaceholder, // displaying unavailable stories
+    placeholder: renderMessageAsPlaceholder // displaying unavailable stories
   }
 
-  var div = dom(`<div class="app-message app-messages__item ${direction}"></div>`);
-  var divContent = dom('<div class="content"></div>');
-
-  if (direction === 'inward') {
-    var senderUsername = window.chat.accounts.find((account) => {
-      return account.id == message._params.accountId
-    })._params.username;
-    divContent.appendChild(dom(`<p class="message-sender">${senderUsername}</p>`));
-  }
+  var div = dom(`<div class="app-messages__item app-messages__item_${direction}"></div>`);
+  var divContent = dom(`<div class="app-message app-message_${direction}"></div>`);
 
   if (!type && typeof message === 'string') type = 'text';
 
-  if (renderers[type]) renderers[type](divContent, message);
-  else renderMessageAsText(divContent, '<unsupported message format>', true);
+  if (renderers[type]) {
+    renderers[type](divContent, message)
+  } else {
+    renderMessageAsText(divContent, '<unsupported message format>', true);
+  }
 
   divContent.appendChild(dom(
-    `<p class="message-time">
+    `<p class="message-time" style="display:;">
       ${time ? formatTime(time) : 'sending ...'}
     </p>`)
   );
@@ -107,7 +103,7 @@ function renderMessageAsImage (container, message) {
 }
 
 function renderMessageAsLike (container) {
-  renderMessageAsImage(container, 'img/love.png');
+  container.appendChild(dom(`<div class="app-message__like"><svg><use xlink:href="#icon-like"></use></svg></div>`));
 }
 
 function renderMessageAsPlaceholder(container, message, noContext) {
@@ -118,7 +114,7 @@ function renderMessageAsPlaceholder(container, message, noContext) {
 
 function renderMessageAsText (container, message, noContext) {
   var text = typeof message === 'string' ? message : message._params.text;
-  container.appendChild(document.createTextNode(text));
+  container.appendChild(dom(`<div class="app-message__text">${text}</div>`));
   if (!noContext) container.oncontextmenu = () => renderContextMenu(text);
 }
 

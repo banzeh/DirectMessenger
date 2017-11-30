@@ -1061,6 +1061,52 @@ CAROUSEL
   padding: 0 15px;
 }
 
+.app-messages__item {
+  display: flex;
+  width: 100%;
+}
+
+.app-messages__item_outward {
+  justify-content: flex-end;
+}
+
+.app-messages__item_inward {
+  justify-content: flex-start;
+}
+
+.app-message {
+
+}
+
+.app-message_outward .app-message__text {
+  background: #0084ff;
+  color: #fff;
+}
+
+.app-message_inward .app-message__text {
+  background: #f1f0f0;
+  color: #000;
+}
+
+.app-message__text {
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-weight: 300;
+}
+
+.app-message__like {
+  width: 34px;
+}
+
+.app-message__like svg {
+  display: block;
+  width: 34px;
+  height: 30px;
+  fill: #FF6666;
+}
+
+
+
 .app-input {
   padding: 15px;
   height: 70px;

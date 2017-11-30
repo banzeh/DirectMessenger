@@ -1,5 +1,5 @@
 {
-  "name": "DM",
+  "name": "direct-messenger",
   "version": "1.0.0",
   "description": "",
   "main": "main.js",
@@ -10,9 +10,8 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/da-sloysha/dm.git"
+    "url": "git+https://github.com/da-sloysha/DirectMessenger.git"
   },
-  "author": "mamon",
   "license": "MIT",
   "dependencies": {
     "bluebird": "^3.5.0",
@@ -26,24 +25,5 @@
   "devDependencies": {
     "electron": "^1.8.1",
     "electron-builder": "^19.47.1"
-  },
-  "build": {
-    "publish": [
-      {
-        "provider": "github",
-        "owner": "mamon",
-        "repo": "dm"
-      }
-    ],
-    "appId": "com.mamon.dm",
-    "copyright": "Mamon 2017",
-    "asar": false,
-    "mac": {
-      "category": "public.app-category.social-networking"
-    },
-    "win": {
-      "target": "nsis",
-      "publisherName": "mamon"
-    }
   }
 }
