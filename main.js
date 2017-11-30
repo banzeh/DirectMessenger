@@ -36,7 +36,7 @@ function createWindow () {
       minWidth: 600
     })
   }
-  mainWindow.setTitle('Direct Messages')
+  mainWindow.setTitle('Direct Messenger')
 
   instagram.checkAuth(session).then((result) => {
     let view = result.isLoggedIn ? 'browser/index.html' : 'browser/login.html'
@@ -154,7 +154,7 @@ electron.ipcMain.on('notify', (evt, message) => {
   let icon = process.platform !== 'darwin' ? path.join(__dirname, '/browser/img/icon.png') : undefined
   if (shouldNotify) {
     notifier.notify({
-      title: 'Direct Messages',
+      title: 'Direct Messenger',
       sound: true,
       message, icon,
       wait: true
