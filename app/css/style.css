@@ -1075,7 +1075,26 @@ CAROUSEL
 }
 
 .app-message {
+  margin-bottom: 10px;
+}
 
+.app-message:hover .app-message__time {
+  opacity: 1;
+}
+
+.app-message__time {
+  font-size: 10px;
+  color: #adadad;
+  opacity: 0;
+  transition: .15s ease-out;
+}
+
+.app-message_outward .app-message__time {
+  text-align: right;
+}
+
+.app-message_inward .app-message__time {
+  text-align: left;
 }
 
 .app-message_outward .app-message__text {
@@ -1103,6 +1122,10 @@ CAROUSEL
   width: 34px;
   height: 30px;
   fill: #FF6666;
+}
+
+.app-message__like + .app-message__time {
+  display: none;
 }
 
 

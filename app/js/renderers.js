@@ -21,9 +21,9 @@ function renderMessage (message, direction, time, type) {
   }
 
   divContent.appendChild(dom(
-    `<p class="message-time" style="display:;">
-      ${time ? formatTime(time) : 'sending ...'}
-    </p>`)
+    `<div class="app-message__time">
+      ${time ? formatTime(time) : 'Sending...'}
+    </div>`)
   );
   div.appendChild(divContent);
   
