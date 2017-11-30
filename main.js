@@ -6,7 +6,6 @@ const BrowserWindow = electron.BrowserWindow;
 const path = require('path');
 const url = require('url');
 const instagram = require('./instagram');
-const autoUpdater = require('./autoupdater');
 const notifier = require('node-notifier');
 const RATE_LIMIT_DELAY = 60000;
 let pollingInterval = 10000;
@@ -80,7 +79,6 @@ app.on('ready', () => {
     const menu = Menu.buildFromTemplate(menuTemplate);
     Menu.setApplicationMenu(menu); 
   }
-  autoUpdater.init();
 })
 
 app.on('window-all-closed', () => {
