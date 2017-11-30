@@ -11,6 +11,10 @@ const RATE_LIMIT_DELAY = 60000;
 let pollingInterval = 10000;
 let shouldNotify = false;
 
+const APP = {
+  NAME: 'Direct Messenger'
+}
+
 // OSX needs custom notifier for custom notification icons
 if (process.platform === 'darwin') {
   notifier.options.customPath = path.join(__dirname,
@@ -33,10 +37,10 @@ function createWindow () {
       width: 800,
       height: 600,
       icon: `${__dirname}/browser/img/icon.png`,
-      minWidth: 600
+      minWidth: 600,
+      title: APP.NAME
     })
   }
-  mainWindow.setTitle('Direct Messenger')
 
   instagram.checkAuth(session).then((result) => {
     let view = result.isLoggedIn ? 'browser/index.html' : 'browser/login.html'
@@ -154,7 +158,7 @@ electron.ipcMain.on('notify', (evt, message) => {
   let icon = process.platform !== 'darwin' ? path.join(__dirname, '/browser/img/icon.png') : undefined
   if (shouldNotify) {
     notifier.notify({
-      title: 'Direct Messenger',
+      title: APP.NAME,
       sound: true,
       message, icon,
       wait: true
