@@ -1,7 +1,6 @@
 const electron = require('electron');
 const app = electron.app;
 const Menu = electron.Menu;
-const menuTemplate = require('./menutemplate');
 const BrowserWindow = electron.BrowserWindow;
 const path = require('path');
 const url = require('url');

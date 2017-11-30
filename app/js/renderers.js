@@ -1,13 +1,14 @@
-function renderMessage (message, direction, time, type) {
-  var renderers = {
-    mediaShare: renderMessageAsPost,
-    text: renderMessageAsText,
-    like: renderMessageAsLike,
-    media: renderMessageAsImage,
-    reel_share: renderMessageAsUserStory, // replying to a user's story
-    link: renderMessageAsLink,
-    placeholder: renderMessageAsPlaceholder // displaying unavailable stories
-  }
+const renderers = {
+  mediaShare: renderMessageAsPost,
+  text: renderMessageAsText,
+  like: renderMessageAsLike,
+  media: renderMessageAsImage,
+  reel_share: renderMessageAsUserStory,
+  link: renderMessageAsLink,
+  placeholder: renderMessageAsPlaceholder
+}
+
+function renderMessage(message, direction, time, type) {
 
   var div = dom(`<div class="app-messages__item app-messages__item_${direction}"></div>`);
   var divContent = dom(`<div class="app-message app-message_${direction}"></div>`);
@@ -114,7 +115,13 @@ function renderMessageAsPlaceholder(container, message, noContext) {
 
 function renderMessageAsText (container, message, noContext) {
   var text = typeof message === 'string' ? message : message._params.text;
-  container.appendChild(dom(`<div class="app-message__text">${text}</div>`));
+  
+  if(text.length == 1) {
+    container.appendChild(dom(`<div class="app-message__text app-message__text_short">${text}</div>`));
+  } else {
+    container.appendChild(dom(`<div class="app-message__text">${text}</div>`));
+  }
+
   if (!noContext) container.oncontextmenu = () => renderContextMenu(text);
 }
 
@@ -158,7 +165,6 @@ function renderChatListItem (username, msgPreview, thumbnail, id) {
 }
 
 function renderSearchResult (users) {
-  var ul = document.querySelector('.app-users__list');
   users.forEach((user) => {
     var li = renderChatListItem(user._params.username, 'send a message', user._params.picture);
     li.onclick = () => {
@@ -170,13 +176,12 @@ function renderSearchResult (users) {
         renderChat({items: [], accounts: [user]});
       }
     }
-    ul.appendChild(li);
+    selectors.usersList.appendChild(li);
   })
 }
 
-function renderChatList (chatList) {
-  var ul = document.querySelector('.app-users__list');
-  ul.innerHTML = "";
+function renderChatList(chatList) {
+  selectors.usersList.innerHTML = "";
   chatList.forEach((chat_) => {
     var msgPreview = getMsgPreview(chat_);
     var usernames = getUsernames(chat_, true);
@@ -194,21 +199,31 @@ function renderChatList (chatList) {
       setActive(li);
       getChat(chat_.id);
     }
-    ul.appendChild(li);
+    selectors.usersList.appendChild(li);
   })
 }
 
-function renderChatHeader (chat_) {
-  let usernames = getUsernames(chat_);
-  let b = dom(`<b>${usernames}</b>`);
+function renderChatHeader(account) {
 
-  if (chat_.accounts.length === 1) {
-    // open user profile in browser
-    b.onclick = () => openInBrowser(`https://instagram.com/${usernames}`)
+  account = account[0]._params;
+
+  const _user = {
+    fullName: account.fullName ? account.fullName : account.username,
+    username: account.username
   }
-  let chatTitleContainer = document.querySelector('.app-messages__title');
-  chatTitleContainer.innerHTML = '';
-  chatTitleContainer.appendChild(b);
+
+  let node = document.createElement("span");
+  let nodeText = document.createTextNode(_user.fullName);
+  node.appendChild(nodeText);
+
+  if (_user.username.length > 1) {
+    node.addEventListener('click', () => {
+      openInBrowser(`https://instagram.com/${_user.username}`)
+    });
+  }
+
+  selectors.messagesTitle.innerHTML = '';
+  selectors.messagesTitle.appendChild(node);
 }
 
 function renderChat (chat_) {
@@ -216,7 +231,7 @@ function renderChat (chat_) {
 
   var msgContainer = document.querySelector('.app-messages__list');
   msgContainer.innerHTML = '';
-  renderChatHeader(chat_);
+  renderChatHeader(chat_.accounts);
   var messages = chat_.items.slice().reverse();
   messages.forEach((message) => {
     if (message._params.accountId == window.loggedInUserId) var direction = 'outward';

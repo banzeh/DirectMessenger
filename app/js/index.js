@@ -1,3 +1,11 @@
+const selectors = {
+  searchInput: null,
+
+  usersList: null,
+
+  messagesTitle: null,
+}
+
 function getLoggedInUser () {
   ipcRenderer.send('getLoggedInUser');
 }
@@ -21,6 +29,11 @@ function unfollow (userId) {
 
 // This code runs once the DOM is loaded (just in case you missed it).
 document.addEventListener('DOMContentLoaded', () => {
+
+  selectors.searchInput = document.querySelector('.app-search__input');
+  selectors.usersList = document.querySelector('.app-users__list');
+  selectors.messagesTitle = document.querySelector('.app-messages__title');
+
   ipcRenderer.on('loggedInUser', (evt, user) => {
     window.loggedInUserId = user.id;
     window.loggedInUser = user;
@@ -69,8 +82,7 @@ document.addEventListener('DOMContentLoaded', () => {
     )
   }
 
-  let searchForm = document.querySelector('.app-search__input');
-  searchForm.onkeyup = (e) => {
+  selectors.searchInput.onkeyup = (e) => {
     const value = searchForm.value;
     const trimmedValue = value.trim() 
 
