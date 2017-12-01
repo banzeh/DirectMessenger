@@ -105,7 +105,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (trimmedValue.length > 3) {
       console.log('searching');
-      ipcRenderer.send('searchUsers', e.target.value)      
+      ipcRenderer.send('searchUsers', e.target.value)
     } else if (trimmedValue.length === 0) {
       renderChatList(window.chats)
     }

@@ -68,7 +68,7 @@ function markAsRead (id, li) {
   if (chat_) {
     chat_.thread_id = chat_.id;
     if (window.shouldSendSeenFlags) {
-      ipcRenderer.send('markAsRead', chat_);      
+      ipcRenderer.send('markAsRead', chat_);
     }
 
     delete unreadChats[id];

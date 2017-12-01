@@ -21,5 +21,5 @@ document.addEventListener('DOMContentLoaded', () => {
     errorElement.innerHTML = errorMessage;
   });
 
-  document.querySelector('a').onclick = () => electron.shell.openExternal("https://github.com/ifedapoolarewaju/igdm")
+  document.querySelector('a').onclick = () => electron.shell.openExternal("https://github.com/da-sloysha/DirectMessenger")
 })
