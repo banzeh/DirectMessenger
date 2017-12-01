@@ -19,8 +19,7 @@
     "electron-updater": "^2.16.3",
     "fb": "^2.0.0",
     "instagram-private-api": "^0.6.7",
-    "node-notifier": "^5.1.2",
-    "nojs": "^0.1.1"
+    "node-notifier": "^5.1.2"
   },
   "devDependencies": {
     "electron": "^1.8.1",

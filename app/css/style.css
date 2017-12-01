@@ -948,6 +948,7 @@ CAROUSEL
 }
 
 .app {
+  position: relative;
   display: flex;
   height: 100vh;
 }
@@ -958,12 +959,43 @@ CAROUSEL
   border-right: 1px solid #ececec;
 }
 
+.app-sidebar__header {
+  display: flex;
+  padding: 15px 15px 14px 15px;
+  flex-wrap: nowrap;
+  align-items: center;
+  border-bottom: 1px solid #ececec;
+}
+
 .app-content {
   flex: 1;
 }
 
+.app-menu {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+.app-menu:hover svg {
+  fill: #0084ff;
+}
+
+.app-menu svg {
+  display: block;
+  width: 24px;
+  height: 14px;
+  fill: #a9a9a9;
+  transition: .15s ease-out;
+}
+
 .app-search {
-  padding: 15px;
+  flex: 1;
 }
 
 .app-search__input {
@@ -1193,4 +1225,46 @@ CAROUSEL
   color: #fff;
   background: rgba(0,0,0,.4);
   padding: 5px 15px;
+}
+
+.app-dropdown {
+  position: absolute;
+  top: 1.5rem;
+  left: 1.5rem;
+  background: #fff;
+  border: 1px solid #f7f7f7;
+  box-shadow: 0 1px 3px rgba(0,0,0,.15);
+  width: 20rem;
+  border-radius: 4px;
+  overflow: hidden;
+  visibility: hidden;
+  opacity: 0;
+  transition: .25s ease-out;
+}
+
+.app-dropdown.__active {
+  overflow: auto;
+  visibility: visible;
+  opacity: 1;
+}
+
+.app-dropdown__list {
+  padding: 10px 0;
+}
+
+.app-dropdown__item {
+  padding: 10px 15px;
+  border-bottom: 1px solid #f1f1f1;
+  color: #000;
+  cursor: pointer;
+  transition: .15s ease-out;
+  font-weight: 500;
+}
+
+.app-dropdown__item:last-child {
+  border-bottom: 0;
+}
+
+.app-dropdown__item:hover {
+  color: #0084ff;
 }

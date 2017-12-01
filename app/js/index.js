@@ -5,6 +5,9 @@ const selectors = {
 
   messagesList: null,
   messagesTitle: null,
+
+  menuButton: null,
+  menuDropdown: null
 }
 
 function getLoggedInUser () {
@@ -36,10 +39,20 @@ document.addEventListener('DOMContentLoaded', () => {
   selectors.messagesTitle = document.querySelector('.app-messages__title');
   selectors.messagesList = document.querySelector('.app-messages__list');
 
+  selectors.menuButton = document.querySelector('.app-menu');
+  selectors.menuDropdown = document.querySelector('.app-dropdown');
+
+  selectors.menuButton.addEventListener('click', (e) => {
+    selectors.menuDropdown.classList.add('__active');
+  });
+
+  selectors.menuDropdown.addEventListener('mouseleave', (e) => {
+    selectors.menuDropdown.classList.remove('__active');
+  });
+
   ipcRenderer.on('loggedInUser', (evt, user) => {
     window.loggedInUserId = user.id;
     window.loggedInUser = user;
-    setProfilePic();
   });
 
   ipcRenderer.on('chatList', (evt, chats_) => {

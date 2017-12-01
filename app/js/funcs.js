@@ -168,9 +168,3 @@ function quoteText (text) {
   input.value = `${text}\n==================\n${input.value}`
   input.focus();
 }
-
-function setProfilePic () {
-  const url = window.loggedInUser._params.profilePicUrl;
-  const settingsButton = document.querySelector('.settings');
-  settingsButton.style.backgroundImage = `url(${url})`;
-}

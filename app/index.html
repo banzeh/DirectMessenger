@@ -13,14 +13,32 @@
           <title>like</title>
           <path d="M17.07,30.07 L16.4805729,29.5848522 C3.56740106,18.9542276 0.07,15.2120935 0.07,9.1335361 C0.07,4.13590432 4.0925635,0.07 9.03692262,0.07 C13.1689368,0.07 15.504554,2.44194668 17.07,4.2262352 C18.635446,2.44194668 20.9710632,0.07 25.1030774,0.07 C30.0474365,0.07 34.07,4.13590432 34.07,9.1335361 C34.07,15.2120935 30.5725989,18.9542276 17.6594271,29.5848522 L17.07,30.07 L17.07,30.07 Z"></path>
         </symbol>
+
+        <symbol id="icon-menu" viewBox="0 0 24 14">
+          <title>menu</title>
+          <polygon id="Fill-19" points="0 0 24 0 24 2 0 2"></polygon>
+          <polygon id="Fill-20" points="0 6 24 6 24 8 0 8"></polygon>
+          <polygon id="Fill-21" points="0 12 24 12 24 14 0 14"></polygon>
         </symbol>
       </defs>
     </svg>
 
     <div class="app">
+      <div class="app-dropdown">
+        <div class="app-dropdown__list">
+          <div class="app-dropdown__item" id="seen-flagger">Don't send "seen"</div>
+          <div class="app-dropdown__item" id="unfollowers">Users not following back</div>
+          <div class="app-dropdown__item" id="logout">Logout</div>
+        </div>
+      </div>
       <side class="app-sidebar app__sidebar">
-        <div class="app-search app__search">
-          <input class="app-search__input" type="text" name="search" placeholder="Search...">
+        <div class="app-sidebar__header">
+          <div class="app-menu">
+            <svg><use xlink:href="#icon-menu"></use></svg>
+          </div>
+          <div class="app-search app__search">
+            <input class="app-search__input" type="text" name="search" placeholder="Search...">
+          </div>
         </div>
         <div class="app-users">
           <ul class="app-users__list">Loading users...</ul>
@@ -53,16 +71,6 @@
     </div>
 
     <div class="container">
-      <button class="settings" no-js on-mouseenter-add-class=".dropdown active"></button>
-      <div class="dropdown" no-js on-mouseleave-remove-class=".dropdown active">
-        <div class="item" id="seen-flagger"
-          title="you would know when recipients read your message, but they won't know when your read theirs.'">
-          DONT SEND "SEEN" RECEIPTS
-        </div>
-        <div class="item" id="unfollowers">USERS NOT FOLLOWING BACK</div>
-        <div class="item" id="logout">LOGOUT</div>
-      </div>
-
       <div class="viewer">
         <button class="close" no-js on-click-remove-class=".viewer active">
           <img width="25px" src="img/close.png" alt="close icon">
