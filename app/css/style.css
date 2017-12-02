@@ -220,6 +220,8 @@ audio:not([controls]) {
  */
 
 img {
+  max-width: inherit;
+  max-height: inherit;
   border-style: none;
 }
 
@@ -699,6 +701,11 @@ button, button:focus {
   font-weight: 200;
 }
 
+.outward {
+  display: flex;
+  justify-content: flex-end;
+}
+
 .message.inward .content{
   margin-right: 70%;
 }
@@ -759,6 +766,11 @@ button, button:focus {
   text-align: right;
   color: #aaa;
   font-size: 14px;
+}
+
+.ig-media {
+  max-height: 293px;
+  max-width: 293px;
 }
 
 .new-message {

@@ -147,7 +147,7 @@ function getIsSeenText (chat_) {
   })
 
   if (seenBy.length === chat_.accounts.length) {
-    text = 'seen'
+    text = 'Seen'
   } else if (seenBy.length) {
     text = `👁 ${getUsernames({accounts: seenBy})}`
   }

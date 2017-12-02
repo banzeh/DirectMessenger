@@ -27,7 +27,7 @@ const getCookieStorage = (filePath) => {
 
   if (canUseFileStorage()) {
     if (!filePath && (username = guessUsername())) {
-      filePath = `${__dirname}/cookies/${username}.json`  
+      filePath = `${__dirname}/cookies/${username}.json`
     }
 
     if (filePath) storage = new Client.CookieFileStorage(filePath);
