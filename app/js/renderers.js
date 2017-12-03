@@ -9,12 +9,17 @@ const renderers = {
   actionLog: renderMessageAsAction
 }
 
-function renderMessage(message, direction, time, type) {
+function renderMessage(message, direction, time, type, isGroup) {
 
   var div = dom(`<div class="app-messages__item app-messages__item_${direction}"></div>`);
   var divContent = dom(`<div class="app-message app-message_${direction}"></div>`);
 
   if (!type && typeof message === 'string') type = 'text';
+
+  if (isGroup && type !== 'actionLog') {
+    let author = getLastMessageUser(message);
+    if (author) divContent.appendChild(dom(author));
+  }
 
   if (renderers[type]) {
     renderers[type](divContent, message)
@@ -28,7 +33,7 @@ function renderMessage(message, direction, time, type) {
     </div>`)
   );
   div.appendChild(divContent);
-  
+
   return div
 }
 
@@ -253,15 +258,16 @@ function renderChat (chat_) {
   window.chat = chat_;
 
   selectors.messagesList.innerHTML = '';
+  const isGroup = chat_.accounts.length > 1;
 
-  chat_.accounts.length === 1 ? renderChatHeader(chat_.accounts) : renderGroupChatHeader(chat_);
+  isGroup ? renderGroupChatHeader(chat_) : renderChatHeader(chat_.accounts);
   var messages = chat_.items.slice().reverse();
   messages.forEach((message) => {
     if (message._params.accountId == window.loggedInUserId) var direction = 'outward';
     else var direction = 'inward';
 
     var div = renderMessage(message, direction,
-      message._params.created, message._params.type
+      message._params.created, message._params.type, isGroup
     );
     selectors.messagesList.appendChild(div);
   })

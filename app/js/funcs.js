@@ -142,6 +142,8 @@ function addNotification (el, chat_) {
 function registerChatUser (chat_) {
   if (chat_.accounts.length === 1) {
     window.chatUsers[chat_.accounts[0].id] = chat_.id;
+  } else {
+    window.chatUsers[chat_.id] = chat_.accounts;
   }
 }
 
@@ -164,6 +166,19 @@ function getIsSeenText (chat_) {
     text = `👁 ${getUsernames({accounts: seenBy})}`
   }
   return text;
+}
+
+function getLastMessageUser(message) {
+  if (!window.lastMessageUserId || window.lastMessageUserId != message._params.accountId) {
+    window.lastMessageUserId = message._params.accountId;
+    if (window.lastMessageUserId === window.loggedInUserId) {
+      return '';
+    }
+    let author = window.chatUsers[currentChatId].find(x => x.id === window.lastMessageUserId);
+    if (author) {
+      return `<span>${author._params.username}</span>`;
+    }
+  }
 }
 
 function showInViewer (dom) {
