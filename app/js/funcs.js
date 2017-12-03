@@ -28,8 +28,20 @@ function dom(content) {
 }
 
 function getUsernames (chat_, shouldTruncate) {
-  var usernames = chat_.accounts.map((acc) => acc._params.username).join(', ');
+  let usernames;
+  if (chat_.accounts.length > 1) {
+    usernames = getGroupName(chat_);
+  } else {
+    usernames = chat_.accounts[0]._params.username;
+  }
   return shouldTruncate ? truncate(usernames, 20) : usernames;
+}
+
+function getGroupName (chat_) {
+  if (chat_._params.title) {
+    return chat_._params.title;
+  }
+  return chat_.accounts.map((acc) => acc._params.username).join(', ');
 }
 
 function isCurrentChat (chat_) {

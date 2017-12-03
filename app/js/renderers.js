@@ -237,12 +237,24 @@ function renderChatHeader(account) {
   selectors.messagesTitle.appendChild(node);
 }
 
+function renderGroupChatHeader(_chat) {
+
+    name = getUsernames(_chat);
+
+    let node = document.createElement("span");
+    let nodeText = document.createTextNode(name);
+    node.appendChild(nodeText);
+
+    selectors.messagesTitle.innerHTML = '';
+    selectors.messagesTitle.appendChild(node);
+  }
+
 function renderChat (chat_) {
   window.chat = chat_;
 
   selectors.messagesList.innerHTML = '';
 
-  renderChatHeader(chat_.accounts);
+  chat_.accounts.length === 1 ? renderChatHeader(chat_.accounts) : renderGroupChatHeader(chat_);
   var messages = chat_.items.slice().reverse();
   messages.forEach((message) => {
     if (message._params.accountId == window.loggedInUserId) var direction = 'outward';
