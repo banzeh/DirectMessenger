@@ -701,7 +701,7 @@ button, button:focus {
   font-weight: 200;
 }
 
-.outward {
+.outward, .action {
   display: flex;
   justify-content: flex-end;
 }

@@ -5,7 +5,8 @@ const renderers = {
   media: renderMessageAsImage,
   reel_share: renderMessageAsUserStory,
   link: renderMessageAsLink,
-  placeholder: renderMessageAsPlaceholder
+  placeholder: renderMessageAsPlaceholder,
+  actionLog: renderMessageAsAction
 }
 
 function renderMessage(message, direction, time, type) {
@@ -153,6 +154,12 @@ function renderContextMenu (text) {
   });
   menu.append(menuItem);
   menu.popup();
+}
+
+function renderMessageAsAction(container, message) {
+  var text = message._params.actionLog.description;
+  container.classList.add('action');
+  container.appendChild(document.createTextNode(text));
 }
 
 function renderChatListItem (username, msgPreview, thumbnail, id) {
