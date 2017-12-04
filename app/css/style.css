@@ -457,7 +457,7 @@ html {
 }
 
 body {
-  font-family: 'Roboto' ,Arial, Helvetica, sans-serif;
+  font-family: 'Helvetica Neue', 'Segoe UI', Helvetica, Arial, sans-serif;
   font-size: 1.4rem;
   line-height: 1.5;
 }
@@ -472,6 +472,11 @@ body {
 
 *::after {
   box-sizing: border-box;
+}
+
+button,
+input {
+  font-family: 'Helvetica Neue', 'Segoe UI', Helvetica, Arial, sans-serif;
 }
 
 @keyframes fadeIn {

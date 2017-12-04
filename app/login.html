@@ -5,31 +5,126 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <link rel="stylesheet" type="text/css" href="css/style.css">
+
+  <style>
+    .app-login {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 10rem 0;
+      max-width: 28rem;
+      margin: 0 auto;
+    }
+
+    .app-login__form {
+      display: block;
+      width: 100%;
+    }
+
+    .app-login__control {
+      margin-bottom: 2rem;
+    }
+
+    .app-login__control:last-child {
+      margin-bottom: 0;
+    }
+
+    .app-login__input {
+      outline: none;
+      display: block;
+      width: 100%;
+      padding: 1.2rem 1.5rem;
+      border-radius: .4rem;
+      border: 1px solid #dadada;
+
+      font-weight: 300;
+      font-size: 1.6rem;
+      letter-spacing: .02rem;
+
+      transition: .15s ease-out;
+    }
+
+    .app-login__input:focus {
+      border-color: #0084ff;
+    }
+
+    .app-login__button {
+      display: block;
+      width: 100%;
+      padding: 12px 20px;
+      border-radius: 4px;
+      font-weight: 300;
+      font-size: 16px;
+      letter-spacing: .02rem;
+      background: #0084ff;
+      color: #fff;
+    }
+
+    .app-login__error {
+      position: relative;
+      width: 100%;
+      margin-top: 5rem;
+    }
+
+    .app-login__error-message {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      opacity: 0;
+      background: #FF6666;
+      color: #fff;
+      padding: 1rem;
+      border-radius: .4rem;
+      transition: .15s ease-out;
+    }
+
+    .app-login__error.__show .app-login__error-message {
+      bottom: 2rem;
+      opacity: 1;
+    }
+
+  </style>
 </head>
 <body>
   <div class="app" id="app">
     <div class="app-login">
-      <div class="app-login__error">{{ error }}</div>
+
+      <div
+        class="app-login__error"
+        :class="{ __show: error }">
+        <div class="app-login__error-message">{{ errorMessage }}</div>
+      </div>
+
       <form action="" class="app-login__form" @submit.prevent="login">
+
         <div class="app-login__control">
           <input
             type="text"
             name="username"
+            class="app-login__input"
             placeholder="Username"
             v-model="credentials.username">
         </div>
+
         <div class="app-login__control">
           <input
             type="password"
             name="password"
+            class="app-login__input"
             placeholder="Password"
             v-model="credentials.password">
         </div>
+
         <div class="app-login__control">
           <button
             type="submit"
+            class="app-login__button"
             @click="login">{{ button }}</button>
         </div>
+
       </form>
     </div>
   </div>

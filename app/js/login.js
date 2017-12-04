@@ -1,5 +1,5 @@
-var electron = require('electron');
-var ipcRenderer = electron.ipcRenderer;
+const electron = require('electron');
+const ipcRenderer = electron.ipcRenderer;
 const config = require('../config');
 
 window.AppLogin = new Vue({
@@ -9,7 +9,8 @@ window.AppLogin = new Vue({
       username: null,
       password: null
     },
-    error: null,
+    error: false,
+    errorMessage: null,
     button: 'Login'
   },
 
@@ -22,11 +23,16 @@ window.AppLogin = new Vue({
         username: this.credentials.username,
         password: this.credentials.password
       })
+    },
+
+    showError: function(message) {
+      this.error = true
+      this.errorMessage = message
+      this.button = 'Login'
     }
   }
 })
 
 ipcRenderer.on('loginError', (evt, errorMessage) => {
-  AppLogin.error = errorMessage
-  AppLogin.button = 'Login'
+  AppLogin.showError(errorMessage)
 })
