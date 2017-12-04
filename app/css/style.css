@@ -784,6 +784,16 @@ button, button:focus {
   max-width: 293px;
 }
 
+.placeholder {
+  font-size: 0.8em;
+  font-weight: 100;
+}
+
+.title {
+  font-size: 0.9em;
+  font-weight: 400;
+}
+
 .new-message {
 
 }
@@ -1191,6 +1201,10 @@ CAROUSEL
   padding: 5px 12px;
   border-radius: 20px;
   font-weight: 300;
+}
+
+.app-message__placeholder {
+  width: 50%;
 }
 
 .app-message__text_short {

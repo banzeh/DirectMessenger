@@ -125,10 +125,11 @@ function renderMessageAsLike (container) {
   container.appendChild(dom(`<div class="app-message__like"><svg><use xlink:href="#icon-like"></use></svg></div>`));
 }
 
-function renderMessageAsPlaceholder(container, message, noContext) {
-  var text = typeof message === 'string' ? message : message.placeholder._params.message;
-  container.appendChild(document.createTextNode(text));
-  if (!noContext) container.oncontextmenu = () => renderContextMenu(text);
+function renderMessageAsPlaceholder(container, message) {
+  var params = message.placeholder._params;
+  container.classList.add('app-message__placeholder');
+  var div = dom(`<div class="app-message__text"><div class="title">${params.title}</div><div class="placeholder">${params.message}</div></div>`)
+  container.appendChild(div);
 }
 
 function renderMessageAsText (container, message, noContext) {
