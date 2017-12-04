@@ -106,7 +106,8 @@
             name="username"
             class="app-login__input"
             placeholder="Username"
-            v-model="credentials.username">
+            v-model="credentials.username"
+            @focus="hideError">
         </div>
 
         <div class="app-login__control">
@@ -115,7 +116,8 @@
             name="password"
             class="app-login__input"
             placeholder="Password"
-            v-model="credentials.password">
+            v-model="credentials.password"
+            @focus="hideError">
         </div>
 
         <div class="app-login__control">

@@ -101,14 +101,16 @@ app.on('browser-window-focus', () => {
   app.setBadgeCount(0);
 })
 
-electron.ipcMain.on('login', (e, data) => {
-  console.log(data)
-  instagram.login(data.username, data.password).then((session_) => {
-    session = session_
+
+electron.ipcMain.on('login', (e, credentials) => {
+
+  instagram.login(credentials.username, credentials.password).then((_session) => {
+    session = _session
     createWindow()
   }).catch((error) => {
     mainWindow.webContents.send('loginError', error.message);
   })
+
 })
 
 electron.ipcMain.on('logout', (evt, data) => {

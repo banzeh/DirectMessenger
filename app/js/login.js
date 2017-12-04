@@ -31,13 +31,17 @@ window.AppLogin = new Vue({
     },
 
     showError: function(message) {
-      this.error = false
+      this.hideError()
 
       setTimeout(() => {
         this.error = true
         this.errorMessage = message
         this.button = 'Login'
       }, 100);
+    },
+
+    hideError: function() {
+      this.error = false
     }
   }
 })
