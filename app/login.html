@@ -1,26 +1,39 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300" rel="stylesheet">
-  <link rel="stylesheet" type="text/css" href="css/login.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" type="text/css" href="css/style.css">
 </head>
 <body>
-  <form>
-    <div>
-      <img src="img/icon.png" width="100px">
-      <h2 class="heading">Direct Messenger</h2>
-      <span id="error" class="errorMessage"></span>
+  <div class="app" id="app">
+    <div class="app-login">
+      <div class="app-login__error">{{ error }}</div>
+      <form action="" class="app-login__form" @submit.prevent="login">
+        <div class="app-login__control">
+          <input
+            type="text"
+            name="username"
+            placeholder="Username"
+            v-model="credentials.username">
+        </div>
+        <div class="app-login__control">
+          <input
+            type="password"
+            name="password"
+            placeholder="Password"
+            v-model="credentials.password">
+        </div>
+        <div class="app-login__control">
+          <button
+            type="submit"
+            @click="login">{{ button }}</button>
+        </div>
+      </form>
     </div>
-    <input type="text" name="username" placeholder="INSTAGRAM USERNAME">
-    <input type="password" name="password" placeholder="INSTAGRAM PASSWORD">
-
-    <button type="submit">LOGIN</button>
-    <br><br><br>
-    <p class="faint-text">This application is not released by Instagram. It is an open source project 
-      <a>here</a>
-    </p>
-    <p class="faint-text">Your data is NOT stored anywhere but sent straight to Instagram.</p>
-  </form>
-  <script type="text/javascript" src="js/login.js"></script>
+  </div>
+  <script src="vendor/vue.js"></script>
+  <script src="js/login.js"></script>
 </body>
 </html>

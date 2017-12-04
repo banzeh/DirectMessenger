@@ -23,6 +23,7 @@
   },
   "devDependencies": {
     "electron": "^1.8.1",
-    "electron-builder": "^19.47.1"
+    "electron-builder": "^19.47.1",
+    "vue": "^2.5.9"
   }
 }

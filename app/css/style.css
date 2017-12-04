@@ -1122,6 +1122,22 @@ CAROUSEL
   width: 100%;
 }
 
+.app-messages__load {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px 0 30px 0;
+  cursor: pointer
+}
+
+.app-messages__load span {
+  display: block;
+  padding: 5px 10px;
+  background: #d3d3d3;
+  border-radius: 50px;
+}
+
 .app-messages__item_outward {
   justify-content: flex-end;
 }

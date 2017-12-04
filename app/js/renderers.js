@@ -298,7 +298,7 @@ function renderChatOlderMessages(chat_) {
 }
 
 function renderOlderMessagesButton(chat_) {
-  var div = dom('<div class="previous">Click here to load previous messages</div>');
+  var div = dom('<div class="app-messages__item"><div class="app-messages__load"><span>Click here to load previous messages</span></div></div>');
   div.addEventListener('click', (e) => {
     ipcRenderer.send('getChat', chat_.id, chat_._params.oldestCursor);
     selectors.messagesList.removeChild(div);
