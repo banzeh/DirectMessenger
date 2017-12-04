@@ -56,10 +56,25 @@ const getDevice = (username) => {
   return device;
 }
 
+getById = function (session, id, cursor) {
+  return new Client.Request(session)
+    .setMethod('GET')
+    .generateUUID()
+    .setResource('threadsShow', {
+      threadId: id,
+      cursor: cursor
+    })
+    .send()
+    .then(function (json) {
+      return new Client.Thread(session, json.thread)
+    });
+}
+
 module.exports = {
   canUseFileStorage,
   guessUsername,
   getCookieStorage,
   clearCookieFiles,
-  getDevice
+  getDevice,
+  getById
 }

@@ -9,6 +9,7 @@ window.chats = [];
 window.chatsHash = {};
 window.unreadChats = {};
 window.chat = {};
+window.isGroupChat = false;
 window.chatUsers = {};
 window.currentChatId = null;
 window.notifiedChatId = null;

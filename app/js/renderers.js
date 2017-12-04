@@ -9,14 +9,26 @@ const renderers = {
   actionLog: renderMessageAsAction
 }
 
-function renderMessage(message, direction, time, type, isGroup) {
+function renderMessages(messages, newMessages) {
+  messages.forEach((message) => {
+    if (message._params.accountId == window.loggedInUserId) var direction = 'outward';
+    else var direction = 'inward';
+
+    var div = renderMessage(message, direction,
+      message._params.created, message._params.type);
+    newMessages ? selectors.messagesList.appendChild(div) :
+      selectors.messagesList.insertBefore(div, selectors.messagesList.firstChild);
+  });
+}
+
+function renderMessage(message, direction, time, type) {
 
   var div = dom(`<div class="app-messages__item app-messages__item_${direction}"></div>`);
   var divContent = dom(`<div class="app-message app-message_${direction}"></div>`);
 
   if (!type && typeof message === 'string') type = 'text';
 
-  if (isGroup && type !== 'actionLog') {
+  if (window.isGroupChat && type !== 'actionLog') {
     let author = getLastMessageUser(message);
     if (author) divContent.appendChild(dom(author));
   }
@@ -43,7 +55,7 @@ function renderMessageAsPost (container, message) {
   if (post.images) {
     // carousels have nested arrays before getting to image url
     var img = dom(`<img src="${post.images[0].url || post.images[0][0].url}">`);
-    img.onload = () => scrollToChatBottom();
+    // img.onload = () => scrollToChatBottom();
     container.appendChild(img);
   }
 
@@ -78,7 +90,7 @@ function renderMessageAsUserStory (container, message) {
   if (message._params.reelShare.media.image_versions2) {
     var url = message._params.reelShare.media.image_versions2.candidates[0].url
     var img = dom(`<img src="${url}">`);
-    img.onload = () => scrollToChatBottom();
+    // img.onload = () => scrollToChatBottom();
     container.appendChild(img);
     container.classList.add('ig-media');
 
@@ -100,7 +112,7 @@ function renderMessageAsUserStory (container, message) {
 function renderMessageAsImage (container, message) {
   var url = typeof message === 'string' ? message : message._params.media[0].url
   var img = dom(`<img src="${url}">`);
-  img.onload = () => scrollToChatBottom();
+  // img.onload = () => scrollToChatBottom();
   container.appendChild(img);
   container.classList.add('ig-media');
 
@@ -136,7 +148,7 @@ function renderMessageAsLink (container, message) {
   const text = message.link._params.text;
   if (link.image && link.image.url) {
     var img = dom(`<img src="${link.image.url}">`);
-    img.onload = () => scrollToChatBottom();
+    // img.onload = () => scrollToChatBottom();
     container.appendChild(img);
   }
   // replace all contained links with anchor tags
@@ -151,6 +163,12 @@ function renderMessageAsLink (container, message) {
   }
 }
 
+function renderMessageAsAction(container, message) {
+  var text = message._params.actionLog.description;
+  container.classList.add('action');
+  container.appendChild(document.createTextNode(text));
+}
+
 function renderContextMenu (text) {
   const menu = new Menu();
   const menuItem = new MenuItem({
@@ -159,12 +177,6 @@ function renderContextMenu (text) {
   });
   menu.append(menuItem);
   menu.popup();
-}
-
-function renderMessageAsAction(container, message) {
-  var text = message._params.actionLog.description;
-  container.classList.add('action');
-  container.appendChild(document.createTextNode(text));
 }
 
 function renderChatListItem (username, msgPreview, thumbnail, id) {
@@ -255,27 +267,43 @@ function renderGroupChatHeader(_chat) {
   }
 
 function renderChat (chat_) {
-  window.chat = chat_;
+  if (window.chat.id !== chat_.id) {
+    window.chat = chat_;
+    selectors.messagesList.innerHTML = '';
+    window.isGroupChat = chat_.accounts.length > 1;
+  }
 
-  selectors.messagesList.innerHTML = '';
-  const isGroup = chat_.accounts.length > 1;
+  if (chat_._params.hasOlder) {
+    renderOlderMessagesButton(chat_);
+  }
 
-  isGroup ? renderGroupChatHeader(chat_) : renderChatHeader(chat_.accounts);
+  window.isGroupChat ? renderGroupChatHeader(chat_) : renderChatHeader(chat_.accounts);
   var messages = chat_.items.slice().reverse();
-  messages.forEach((message) => {
-    if (message._params.accountId == window.loggedInUserId) var direction = 'outward';
-    else var direction = 'inward';
-
-    var div = renderMessage(message, direction,
-      message._params.created, message._params.type, isGroup
-    );
-    selectors.messagesList.appendChild(div);
-  })
+  renderMessages(messages, true);
   renderMessageSeenText(selectors.messagesList, chat_);
   scrollToChatBottom();
 
   addSubmitHandler(chat_);
   document.querySelector(MSG_INPUT_SELECTOR).focus();
+}
+
+function renderChatOlderMessages(chat_) {
+  var messages = chat_.items.slice();
+
+  renderMessages(messages);
+
+  if (chat_._params.hasOlder) {
+    renderOlderMessagesButton(chat_);
+  }
+}
+
+function renderOlderMessagesButton(chat_) {
+  var div = dom('<div class="previous">Click here to load previous messages</div>');
+  div.addEventListener('click', (e) => {
+    ipcRenderer.send('getChat', chat_.id, chat_._params.oldestCursor);
+    selectors.messagesList.removeChild(div);
+  });
+  selectors.messagesList.insertBefore(div, selectors.messagesList.firstChild);
 }
 
 function renderMessageSeenText (container, chat_) {
