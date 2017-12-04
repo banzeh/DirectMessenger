@@ -221,7 +221,6 @@ audio:not([controls]) {
 
 img {
   max-width: inherit;
-  max-height: inherit;
   border-style: none;
 }
 
@@ -780,8 +779,11 @@ button, button:focus {
 }
 
 .ig-media {
-  max-height: 293px;
   max-width: 293px;
+}
+
+.ig-media img {
+  max-height: 293px;
 }
 
 .placeholder {

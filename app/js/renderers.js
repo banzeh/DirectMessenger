@@ -105,7 +105,7 @@ function renderMessageAsUserStory (container, message) {
   }
 
   if (message._params.reelShare.text) {
-    container.appendChild(document.createTextNode(message._params.reelShare.text));
+    container.appendChild(dom(`<div class="app-message__text">${message._params.reelShare.text}</div>`));
   }
 }
 
