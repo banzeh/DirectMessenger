@@ -40,7 +40,7 @@ exports.getChatList = function (session) {
 
 exports.getChat = function (session, chatId, cursor) {
   return new Promise((resolve, reject) => {
-    Client.Thread.getById(session, chatId, cursor).then(resolve).catch(reject)
+    utils.getById(session, chatId, cursor).then(resolve).catch(reject)
   })
 }
 
