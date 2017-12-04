@@ -101,10 +101,8 @@ app.on('browser-window-focus', () => {
   app.setBadgeCount(0);
 })
 
-electron.ipcMain.on('login', (evt, data) => {
-  if(data.username === "" || data.password === "") {
-    return mainWindow.webContents.send('loginError', "Please enter all required fields");
-  }
+electron.ipcMain.on('login', (e, data) => {
+  console.log(data)
   instagram.login(data.username, data.password).then((session_) => {
     session = session_
     createWindow()
