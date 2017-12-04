@@ -32,7 +32,7 @@ function getUsernames (chat_, shouldTruncate) {
   if (chat_.accounts.length > 1) {
     usernames = getGroupName(chat_);
   } else {
-    usernames = chat_.accounts[0]._params.username;
+    usernames = chat_.accounts[0] ? chat_.accounts[0]._params.username : chat_._params.inviter._params.fullName;
   }
   return shouldTruncate ? truncate(usernames, 20) : usernames;
 }
@@ -42,6 +42,15 @@ function getGroupName (chat_) {
     return chat_._params.title;
   }
   return chat_.accounts.map((acc) => acc._params.username).join(', ');
+}
+
+function getThumbnail (chat_) {
+  let account = chat_.accounts[0];
+  if(account && account._params.picture) {
+    return account._params.picture;
+  } else {
+    return chat_._params.inviter._params.picture;
+  }
 }
 
 function isCurrentChat (chat_) {
