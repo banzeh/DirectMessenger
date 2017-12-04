@@ -14,9 +14,9 @@ function getLoggedInUser () {
   ipcRenderer.send('getLoggedInUser');
 }
 
-function getChat (id) {
+function getChat (id, cursor) {
   window.currentChatId = id;
-  ipcRenderer.send('getChat', id);
+  ipcRenderer.send('getChat', id, cursor);
 }
 
 function getChatList () {
@@ -68,6 +68,11 @@ document.addEventListener('DOMContentLoaded', () => {
       !chat_.items.length || window.chat.items[0].id != chat_.items[0].id ||
       getIsSeenText(chat_) != getIsSeenText(window.chat)
     )
+
+    if (chat_._params.hasNewer) {
+      renderChatOlderMessages(chat_);
+      return;
+    }
 
     if (isNewMessage && isCurrentChat(chat_)) renderChat(chat_);
   });

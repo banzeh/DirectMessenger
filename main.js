@@ -62,8 +62,8 @@ function getChatList () {
 }
 
 let timeoutObj;
-function getChat (evt, id) {
-  instagram.getChat(session, id).then((chat) => {
+function getChat (evt, id, cursor) {
+  instagram.getChat(session, id, cursor).then((chat) => {
     mainWindow.webContents.send('chat', chat);
 
     if (timeoutObj) clearTimeout(timeoutObj)
