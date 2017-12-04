@@ -1,5 +1,5 @@
-const electron = require('electron');
-const ipcRenderer = electron.ipcRenderer;
+const ipcRenderer = require('electron').ipcRenderer;
+const shell = require('electron').shell;
 const config = require('../config');
 
 window.AppLogin = new Vue({
@@ -11,7 +11,8 @@ window.AppLogin = new Vue({
     },
     error: false,
     errorMessage: null,
-    button: 'Login'
+    button: 'Login',
+    links: config.instagram.links
   },
 
   methods: {
@@ -37,11 +38,15 @@ window.AppLogin = new Vue({
         this.error = true
         this.errorMessage = message
         this.button = 'Login'
-      }, 100);
+      }, 150);
     },
 
     hideError: function() {
       this.error = false
+    },
+
+    openLink: function(link) {
+      shell.openExternal(link)
     }
   }
 })

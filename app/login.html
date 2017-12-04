@@ -86,6 +86,17 @@
       opacity: 1;
     }
 
+    .app-login__links {
+      width: 100%;
+    }
+
+    .app-login__link {
+      font-weight: 300;
+      color: #4e4e4e;
+      cursor: pointer;
+      margin-bottom: .5rem;
+    }
+
   </style>
 </head>
 <body>
@@ -124,6 +135,15 @@
           <button
             type="submit"
             class="app-login__button">{{ button }}</button>
+        </div>
+
+        <div class="app-login__control">
+          <div class="app-login__links">
+              <div
+                v-for="link in links"
+                class="app-login__link"
+                @click="openLink(link.url)">{{ link.title }}</div>
+          </div>
         </div>
 
       </form>
