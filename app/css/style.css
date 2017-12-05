@@ -221,7 +221,6 @@ audio:not([controls]) {
 
 img {
   max-width: inherit;
-  max-height: inherit;
   border-style: none;
 }
 
@@ -781,8 +780,21 @@ button, button:focus {
 }
 
 .ig-media {
-  max-height: 293px;
   max-width: 293px;
+}
+
+.ig-media img {
+  max-height: 293px;
+}
+
+.placeholder {
+  font-size: 0.8em;
+  font-weight: 100;
+}
+
+.title {
+  font-size: 0.9em;
+  font-weight: 400;
 }
 
 .new-message {
@@ -1193,6 +1205,10 @@ CAROUSEL
   border-radius: 20px;
   font-weight: 300;
   user-select: auto;
+}
+
+.app-message__placeholder {
+  width: 50%;
 }
 
 .app-message__text_short {

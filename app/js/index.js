@@ -69,7 +69,7 @@ document.addEventListener('DOMContentLoaded', () => {
       getIsSeenText(chat_) != getIsSeenText(window.chat)
     )
 
-    if (chat_._params.hasNewer) {
+    if (chat_._params && chat_._params.hasNewer) {
       renderChatOlderMessages(chat_);
       return;
     }

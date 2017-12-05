@@ -105,7 +105,7 @@ function renderMessageAsUserStory (container, message) {
   }
 
   if (message._params.reelShare.text) {
-    container.appendChild(document.createTextNode(message._params.reelShare.text));
+    container.appendChild(dom(`<div class="app-message__text">${message._params.reelShare.text}</div>`));
   }
 }
 
@@ -125,10 +125,11 @@ function renderMessageAsLike (container) {
   container.appendChild(dom(`<div class="app-message__like"><svg><use xlink:href="#icon-like"></use></svg></div>`));
 }
 
-function renderMessageAsPlaceholder(container, message, noContext) {
-  var text = typeof message === 'string' ? message : message.placeholder._params.message;
-  container.appendChild(document.createTextNode(text));
-  if (!noContext) container.oncontextmenu = () => renderContextMenu(text);
+function renderMessageAsPlaceholder(container, message) {
+  var params = message.placeholder._params;
+  container.classList.add('app-message__placeholder');
+  var div = dom(`<div class="app-message__text"><div class="title">${params.title}</div><div class="placeholder">${params.message}</div></div>`)
+  container.appendChild(div);
 }
 
 function renderMessageAsText (container, message, noContext) {
@@ -213,7 +214,8 @@ function renderChatList(chatList) {
   chatList.forEach((chat_) => {
     var msgPreview = getMsgPreview(chat_);
     var usernames = getUsernames(chat_, true);
-    var thumbnail = chat_.accounts[0]._params.picture;
+    var thumbnail = getThumbnail(chat_);
+
     var li = renderChatListItem(usernames, msgPreview, thumbnail, chat_.id);
 
     registerChatUser(chat_);
@@ -231,9 +233,9 @@ function renderChatList(chatList) {
   })
 }
 
-function renderChatHeader(account) {
+function renderChatHeader(chat_) {
 
-  account = account[0]._params;
+  account = chat_.accounts[0] ? chat_.accounts[0]._params : chat_._params.inviter._params;
 
   const _user = {
     fullName: account.fullName ? account.fullName : account.username,
@@ -254,9 +256,9 @@ function renderChatHeader(account) {
   selectors.messagesTitle.appendChild(node);
 }
 
-function renderGroupChatHeader(_chat) {
+function renderGroupChatHeader(chat_) {
 
-    name = getUsernames(_chat);
+    name = getUsernames(chat_);
 
     let node = document.createElement("span");
     let nodeText = document.createTextNode(name);
@@ -267,17 +269,17 @@ function renderGroupChatHeader(_chat) {
   }
 
 function renderChat (chat_) {
-  if (window.chat.id !== chat_.id) {
+  if (window.chat.id !== chat_.id || chat_.id === DUMMY_CHAT_ID) {
     window.chat = chat_;
     selectors.messagesList.innerHTML = '';
     window.isGroupChat = chat_.accounts.length > 1;
   }
 
-  if (chat_._params.hasOlder) {
+  if (chat_._params && chat_._params.hasOlder) {
     renderOlderMessagesButton(chat_);
   }
 
-  window.isGroupChat ? renderGroupChatHeader(chat_) : renderChatHeader(chat_.accounts);
+  window.isGroupChat ? renderGroupChatHeader(chat_) : renderChatHeader(chat_);
   var messages = chat_.items.slice().reverse();
   renderMessages(messages, true);
   renderMessageSeenText(selectors.messagesList, chat_);
