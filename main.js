@@ -1,16 +1,16 @@
-const electron = require('electron');
-const app = electron.app;
-const Menu = electron.Menu;
-const BrowserWindow = electron.BrowserWindow;
-const path = require('path');
-const url = require('url');
-const instagram = require('./instagram');
-const notifier = require('node-notifier');
-const RATE_LIMIT_DELAY = 60000;
-let pollingInterval = 10000;
-let shouldNotify = false;
+const electron = require('electron')
+const app = electron.app
+const Menu = electron.Menu
+const BrowserWindow = electron.BrowserWindow
+const path = require('path')
+const url = require('url')
+const instagram = require('./instagram')
+const notifier = require('node-notifier')
+const RATE_LIMIT_DELAY = 60000
+let pollingInterval = 10000
+let shouldNotify = false
 
-const config = require('./config');
+const config = require('./config')
 
 // OSX needs custom notifier for custom notification icons
 if (process.platform === 'darwin') {
@@ -19,8 +19,8 @@ if (process.platform === 'darwin') {
 }
 
 notifier.on('click', () => {
-  app.focus();
-  mainWindow.webContents.send('focusNotifiedChat');
+  app.focus()
+  mainWindow.webContents.send('focusNotifiedChat')
 })
 
 // Keep a global reference of the window object, if you don't, the window will
@@ -50,7 +50,9 @@ function createWindow () {
     }))
   })
 
-  mainWindow.on('closed', () => mainWindow = null)
+  mainWindow.on('closed', () => {
+    mainWindow = null
+  })
 }
 
 function getChatList () {
@@ -61,10 +63,10 @@ function getChatList () {
   }).catch(() => setTimeout(getChatList, RATE_LIMIT_DELAY))
 }
 
-let timeoutObj;
+let timeoutObj
 function getChat (evt, id, cursor) {
   instagram.getChat(session, id, cursor).then((chat) => {
-    mainWindow.webContents.send('chat', chat);
+    mainWindow.webContents.send('chat', chat)
 
     if (timeoutObj) clearTimeout(timeoutObj)
 
@@ -73,8 +75,8 @@ function getChat (evt, id, cursor) {
 }
 
 app.on('ready', () => {
-  createWindow();
-  mainWindow.setMenu(null);
+  createWindow()
+  mainWindow.setMenu(null)
 })
 
 app.on('window-all-closed', () => {
@@ -91,26 +93,23 @@ app.on('activate', () => {
 
 // reduce polling frequency when app is not active.
 app.on('browser-window-blur', () => {
-  pollingInterval = 30000;
-  shouldNotify = true;
+  pollingInterval = 30000
+  shouldNotify = true
 })
 
 app.on('browser-window-focus', () => {
-  pollingInterval = 10000;
-  shouldNotify = false;
-  app.setBadgeCount(0);
+  pollingInterval = 10000
+  shouldNotify = false
+  app.setBadgeCount(0)
 })
 
-
 electron.ipcMain.on('login', (e, credentials) => {
-
   instagram.login(credentials.username, credentials.password).then((_session) => {
     session = _session
     createWindow()
   }).catch((error) => {
-    mainWindow.webContents.send('loginError', error.message);
+    mainWindow.webContents.send('loginError', error.message)
   })
-
 })
 
 electron.ipcMain.on('logout', (evt, data) => {
@@ -121,7 +120,7 @@ electron.ipcMain.on('logout', (evt, data) => {
 
 electron.ipcMain.on('getLoggedInUser', (evt) => {
   instagram.getLoggedInUser(session).then((user) => {
-    mainWindow.webContents.send('loggedInUser', user);
+    mainWindow.webContents.send('loggedInUser', user)
   })
 })
 
@@ -137,7 +136,7 @@ electron.ipcMain.on('message', (evt, data) => {
 
 electron.ipcMain.on('searchUsers', (evt, search) => {
   instagram.searchUsers(session, search).then((users) => {
-    mainWindow.webContents.send('searchResult', users);
+    mainWindow.webContents.send('searchResult', users)
   })
 })
 
@@ -146,16 +145,15 @@ electron.ipcMain.on('markAsRead', (evt, thread) => {
 })
 
 electron.ipcMain.on('notify', (evt, message) => {
-  // OSX uses the default terminal notifier icon
   let icon = process.platform !== 'darwin' ? path.join(__dirname, '/app/img/icon.png') : undefined
   if (shouldNotify) {
     notifier.notify({
       title: config.app.name,
       sound: true,
-      message, icon,
+      message: icon,
       wait: true
-    });
-    app.setBadgeCount(app.getBadgeCount() + 1);
+    })
+    app.setBadgeCount(app.getBadgeCount() + 1)
   }
 })
 
