@@ -41,12 +41,21 @@
           </svg>
         </div>
         <div class="app-search app__search">
-          <input class="app-search__input" type="text" name="search" placeholder="Search...">
+          <input
+            class="app-search__input"
+            type="text"
+            name="search"
+            placeholder="Search..."
+            v-model="searchString"
+            @keyup="searchChats">
         </div>
       </div>
       <div class="app-users">
-        <div class="app-users__list">
-          <li
+        <div
+          class="app-users__list"
+          v-if="searchActive == false">
+
+          <div
             v-for="(chat, index) in chats"
             @click="activateChat(chat)"
             :class="{ __active: chat.id === activeChat.id }"
@@ -60,7 +69,25 @@
                 <div class="app-user__message">{{ getChatPreview(chat) }}</div>
               </div>
             </div>
-          </li>
+          </div>
+        </div>
+        
+        <div
+          class="app-users__list"
+          v-if="searchActive == true">
+          <div
+            v-for="(chat, index) in searchResults"
+            class="app-users__item">
+            <div class="app-user">
+              <div class="app-user__thumb">
+                <img :src="chat._params.picture" class="app-user__img"/>
+              </div>
+              <div class="app-user__info">
+                <div class="app-user__name">{{ chat._params.username }}</div>
+                <div class="app-user__message">Send message</div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </aside>

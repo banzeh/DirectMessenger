@@ -75,7 +75,7 @@ document.addEventListener('DOMContentLoaded', () => {
   })
 
   ipcRenderer.on('searchResult', (evt, users) => {
-    renderSearchResult(users)
+    AppMessenger.searchResults = users
   })
 
   ipcRenderer.on('focusNotifiedChat', (evt) => {
@@ -97,20 +97,6 @@ document.addEventListener('DOMContentLoaded', () => {
       document.querySelector('.emojis-body'),
       onEmojiSelected
     )
-  }
-
-  selectors.searchInput.onkeyup = (e) => {
-    const value = e.target.value
-    const trimmedValue = value.trim()
-
-    console.log(trimmedValue.length)
-
-    if (trimmedValue.length > 3) {
-      console.log('searching')
-      ipcRenderer.send('searchUsers', e.target.value)
-    } else if (trimmedValue.length === 0) {
-      renderChatList(window.chats)
-    }
   }
 
   getLoggedInUser()

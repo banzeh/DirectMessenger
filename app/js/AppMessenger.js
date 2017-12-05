@@ -5,7 +5,10 @@ const AppMessenger = new Vue({
   data: {
     chats: [],
     activeChat: {},
-    activeChatUsers: {}
+    activeChatUsers: {},
+    searchString: '',
+    searchResults: [],
+    searchActive: false
   },
 
   computed: {},
@@ -56,6 +59,17 @@ const AppMessenger = new Vue({
 
     setActiveChat: function (chat) {
       this.activeChat = chat
+    },
+
+    searchChats: function () {
+      const str = this.searchString.trim()
+
+      if (str.length > 3) {
+        this.searchActive = true
+        ipcRenderer.send('searchUsers', str)
+      } else if (str.length === 0) {
+        this.searchActive = false
+      }
     }
   }
 })
