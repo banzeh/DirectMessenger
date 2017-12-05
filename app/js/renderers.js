@@ -16,8 +16,7 @@ function renderMessages(messages, newMessages) {
 
     var div = renderMessage(message, direction,
       message._params.created, message._params.type);
-    newMessages ? selectors.messagesList.appendChild(div) :
-      selectors.messagesList.insertBefore(div, selectors.messagesList.firstChild);
+    newMessages ? selectors.messagesList.appendChild(div) : selectors.messagesList.insertBefore(div, selectors.messagesList.firstChild)
   });
 }
 
@@ -29,8 +28,8 @@ function renderMessage(message, direction, time, type) {
   if (!type && typeof message === 'string') type = 'text';
 
   if (window.isGroupChat && type !== 'actionLog') {
-    let author = getLastMessageUser(message);
-    if (author) divContent.appendChild(dom(author));
+    let author = getLastMessageUser(message)
+    if (author) divContent.appendChild(dom(author))
   }
 
   if (renderers[type]) {
@@ -43,14 +42,14 @@ function renderMessage(message, direction, time, type) {
     `<div class="app-message__time">
       ${time ? formatTime(time) : 'Sending...'}
     </div>`)
-  );
-  div.appendChild(divContent);
+  )
+  div.appendChild(divContent)
 
   return div
 }
 
 function renderMessageAsPost (container, message) {
-  var post = message.mediaShare._params;
+  var post = message.mediaShare._params
 
   if (post.images) {
     // carousels have nested arrays before getting to image url

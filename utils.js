@@ -1,9 +1,12 @@
-const fs = require('fs');
-const Client = require('instagram-private-api').V1;
+const fs = require('fs')
+const Client = require('instagram-private-api').V1
+const path = require('path')
+
+const cookiesDirectory = path.join(__dirname, 'cookies')
 
 const canUseFileStorage = () => {
   try {
-    fs.accessSync(`${__dirname}/cookies/`, fs.W_OK);
+    fs.accessSync(cookiesDirectory, fs.W_OK);
     return true
   } catch (error) {
     return false
@@ -13,7 +16,7 @@ const canUseFileStorage = () => {
 const guessUsername = () => {
   let username;
   if (canUseFileStorage()) {
-    const files = fs.readdirSync(`${__dirname}/cookies`);
+    const files = fs.readdirSync(cookiesDirectory);
     if (files.length && files[0].endsWith('.json')) {
       username = files[0].slice(0, -5);
     }
@@ -27,7 +30,7 @@ const getCookieStorage = (filePath) => {
 
   if (canUseFileStorage()) {
     if (!filePath && (username = guessUsername())) {
-      filePath = `${__dirname}/cookies/${username}.json`
+      filePath = path.join(cookiesDirectory, `${username}.json`)
     }
 
     if (filePath) storage = new Client.CookieFileStorage(filePath);
@@ -39,10 +42,9 @@ const getCookieStorage = (filePath) => {
 }
 
 const clearCookieFiles = () => {
-  // delete all session storage
   if (canUseFileStorage()) {
-    fs.readdirSync(`${__dirname}/cookies`).forEach((filename) => {
-      fs.unlinkSync(`${__dirname}/cookies/${filename}`);
+    fs.readdirSync(cookiesDirectory).forEach((filename) => {
+      fs.unlinkSync(path.join(cookiesDirectory, filename))
     })
   }
 }
