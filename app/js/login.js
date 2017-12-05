@@ -12,7 +12,7 @@ window.AppLogin = new Vue({
     error: false,
     errorMessage: null,
     button: 'Login',
-    links: config.instagram.links
+    links: config.instagram.links.login
   },
 
   methods: {

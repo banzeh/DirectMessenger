@@ -8,15 +8,17 @@ module.exports = {
   },
 
   instagram: {
-    links: [
-      {
-        title: 'Forgot Password?',
-        url: 'https://www.instagram.com/accounts/password/reset/'
-      },
-      {
-        title: 'Sign Up',
-        url: 'https://www.instagram.com'
-      }
-    ]
+    links: {
+      login: [
+        {
+          title: 'Forgot Password?',
+          url: 'https://www.instagram.com/accounts/password/reset/'
+        },
+        {
+          title: 'Sign Up',
+          url: 'https://www.instagram.com'
+        }
+      ]
+    }
   }
 }
