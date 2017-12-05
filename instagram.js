@@ -1,39 +1,39 @@
-const Client = require('instagram-private-api').V1;
-const utils = require('./utils');
+const Client = require('instagram-private-api').V1
+const utils = require('./utils')
 
 exports.checkAuth = function (session) {
   return new Promise((resolve, reject) => {
     if (!session) {
-      const device = utils.getDevice();
-      const storage = utils.getCookieStorage();
+      const device = utils.getDevice()
+      const storage = utils.getCookieStorage()
       if (!device || !storage) {
-        return resolve({ isLoggedIn: false });
+        return resolve({ isLoggedIn: false })
       }
-      session = new Client.Session(device, storage);
+      session = new Client.Session(device, storage)
     }
 
     session.getAccountId()
       .then(() => resolve({ isLoggedIn: true, session }))
       .catch(Client.Exceptions.CookieNotValidError, () => resolve({ isLoggedIn: false }))
-  });
+  })
 }
 
 exports.login = function (username, password) {
-  utils.clearCookieFiles();
+  utils.clearCookieFiles()
   return new Promise((resolve, reject) => {
-    const device = utils.getDevice(username);
-    const storage = utils.getCookieStorage(`${__dirname}/cookies/${username}.json`);
+    const device = utils.getDevice(username)
+    const storage = utils.getCookieStorage(`${__dirname}/cookies/${username}.json`)
     Client.Session.create(device, storage, username, password).then(resolve).catch(reject)
   })
 }
 
 exports.logout = function () {
-  utils.clearCookieFiles();
+  utils.clearCookieFiles()
 }
 
 exports.getChatList = function (session) {
   return new Promise((resolve, reject) => {
-    var feed = new Client.Feed.Inbox(session, 10);
+    var feed = new Client.Feed.Inbox(session, 10)
     feed.all().then(resolve).catch(reject)
   })
 }
@@ -62,46 +62,48 @@ exports.seen = function (session, thread) {
 
 exports.getUnfollowers = function (session) {
   return new Promise((resolve, reject) => {
-    let followers = [];
-    let following = [];
-    const accountId = session._cookiesStore.storage.idx['i.instagram.com']['/'].ds_user_id.value;
+    let followers = []
+    let following = []
+    const accountId = session._cookiesStore.storage.idx['i.instagram.com']['/'].ds_user_id.value
 
     const compare = () => {
-      hashedFollowers = {}
-      followers.forEach((user) => hashedFollowers[user.id] = true);
+      let hashedFollowers = {}
+      followers.forEach((user) => {
+        hashedFollowers[user.id] = true
+      })
 
-      let unfollowers = following.filter((user) => !hashedFollowers[user.id]);
-      resolve(unfollowers);
+      let unfollowers = following.filter((user) => !hashedFollowers[user.id])
+      resolve(unfollowers)
     }
 
     const getUsers = (newUsers, allUsers, usersGetter, otherUsersGetter) => {
       newUsers.forEach((user) => allUsers.push(user))
       // moreAvailable maybe null. We are dodging that.
-      if (usersGetter.moreAvailable === false && otherUsersGetter.moreAvailable === false){
-        compare();
+      if (usersGetter.moreAvailable === false && otherUsersGetter.moreAvailable === false) {
+        compare()
       } else if (usersGetter.moreAvailable !== false) {
         usersGetter.get()
           .then((users) => getUsers(users, allUsers, usersGetter, otherUsersGetter))
-          .catch(reject);
+          .catch(reject)
       }
     }
 
-    const followersGetter = new Client.Feed.AccountFollowers(session, accountId);
+    const followersGetter = new Client.Feed.AccountFollowers(session, accountId)
     const followingGetter = new Client.Feed.AccountFollowing(session, accountId)
 
-    getUsers([], followers, followersGetter, followingGetter);
-    getUsers([], following, followingGetter, followersGetter);
+    getUsers([], followers, followersGetter, followingGetter)
+    getUsers([], following, followingGetter, followersGetter)
   })
 }
 
 exports.unfollow = function (session, userId) {
-  Client.Relationship.destroy(session, userId);
+  Client.Relationship.destroy(session, userId)
 }
 
 exports.getLoggedInUser = function (session) {
   return new Promise((resolve, reject) => {
     session.getAccountId().then((id) => {
-      Client.Account.getById(session, id).then(resolve).catch(reject);
-    });
-  });
+      Client.Account.getById(session, id).then(resolve).catch(reject)
+    })
+  })
 }

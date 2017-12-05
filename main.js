@@ -11,7 +11,6 @@ let shouldNotify = false
 
 const config = require('./config')
 
-// OSX needs custom notifier for custom notification icons
 if (process.platform === 'darwin') {
   notifier.options.customPath = path.join(__dirname,
     'vendor/terminal-notifier.app/Contents/MacOS/terminal-notifier')
@@ -22,8 +21,6 @@ notifier.on('click', () => {
   mainWindow.webContents.send('focusNotifiedChat')
 })
 
-// Keep a global reference of the window object, if you don't, the window will
-// be closed automatically when the JavaScript object is garbage collected.
 let mainWindow
 let session
 
@@ -79,18 +76,17 @@ app.on('ready', () => {
 })
 
 app.on('window-all-closed', () => {
-  if (process.platform !== 'darwin') app.quit()
+  if (process.platform !== 'darwin') {
+    app.quit()
+  }
 })
 
 app.on('activate', () => {
-  // On OS X it's common to re-create a window in the app when the
-  // dock icon is clicked and there are no other windows open.
-  // only call createWindow afeter mainWindow is set to null at
-  // mainWindow.on('closed')
-  if (mainWindow === null) createWindow()
+  if (mainWindow === null) {
+    createWindow()
+  }
 })
 
-// reduce polling frequency when app is not active.
 app.on('browser-window-blur', () => {
   pollingInterval = 30000
   shouldNotify = true

@@ -26,15 +26,14 @@
     </defs>
   </svg>
 
-  <div class="app">
+  <div class="app" id="app">
     <div class="app-dropdown">
       <div class="app-dropdown__list">
-        <div class="app-dropdown__item" id="seen-flagger">Don't send "seen"</div>
-        <div class="app-dropdown__item" id="unfollowers">Users not following back</div>
-        <div class="app-dropdown__item" id="logout">Logout</div>
+        <div class="app-dropdown__item" @click="unfollowers">Users not following back</div>
+        <div class="app-dropdown__item" @click="logout">Logout</div>
       </div>
     </div>
-    <side class="app-sidebar app__sidebar">
+    <aside class="app-sidebar app__sidebar">
       <div class="app-sidebar__header">
         <div class="app-menu">
           <svg>
@@ -46,9 +45,25 @@
         </div>
       </div>
       <div class="app-users">
-        <ul class="app-users__list">Loading users...</ul>
+        <div class="app-users__list">
+          <li
+            v-for="(chat, index) in chats"
+            @click="activateChat(chat)"
+            :class="{ __active: chat.id === activeChat.id }"
+            class="app-users__item">
+            <div class="app-user">
+              <div class="app-user__thumb">
+                <img :src="getChatThumbnail(chat)" class="app-user__img"/>
+              </div>
+              <div class="app-user__info">
+                <div class="app-user__name">{{ getChatTitle(chat) }}</div>
+                <div class="app-user__message">{{ getChatPreview(chat) }}</div>
+              </div>
+            </div>
+          </li>
+        </div>
       </div>
-    </side>
+    </aside>
     <div class="app-content app__content">
       <div class="app-messages">
         <div class="app-messages__header">
@@ -74,23 +89,23 @@
       </div>
     </div>
   </div>
-
-  <div class="container">
-    <div class="viewer">
-      <button class="close" no-js on-click-remove-class=".viewer active">
-        <img width="25px" src="img/close.png" alt="close icon">
-      </button>
-      <div class="content"></div>
-    </div>
+  <div class="viewer">
+    <button class="close" no-js on-click-remove-class=".viewer active">
+      <img width="25px" src="img/close.png" alt="close icon">
+    </button>
+    <div class="content"></div>
   </div>
 </body>
 
-<script type="text/javascript" src="http://nojs.io/release/0.1.1/no.min.js"></script>
-<script type="text/javascript" src="js/globals.js"></script>
-<script type="text/javascript" src="js/emoji.js"></script>
-<script type="text/javascript" src="js/carousel.js"></script>
-<script type="text/javascript" src="js/funcs.js"></script>
-<script type="text/javascript" src="js/renderers.js"></script>
-<script type="text/javascript" src="js/index.js"></script>
+<script src="vendor/vue.js"></script>
+<script src="vendor/vuex.js"></script>
+<script src="js/AppMessenger.js"></script>
+<script src="http://nojs.io/release/0.1.1/no.min.js"></script>
+<script src="js/globals.js"></script>
+<script src="js/emoji.js"></script>
+<script src="js/carousel.js"></script>
+<script src="js/funcs.js"></script>
+<script src="js/renderers.js"></script>
+<script src="js/index.js"></script>
 
 </html>

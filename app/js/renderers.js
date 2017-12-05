@@ -209,27 +209,27 @@ function renderSearchResult (users) {
 }
 
 function renderChatList(chatList) {
-  selectors.usersList.innerHTML = "";
-  chatList.forEach((chat_) => {
-    var msgPreview = getMsgPreview(chat_);
-    var usernames = getUsernames(chat_, true);
-    var thumbnail = getThumbnail(chat_);
+  // selectors.usersList.innerHTML = "";
+  // chatList.forEach((chat_) => {
+  //   var msgPreview = getMsgPreview(chat_);
+  //   var usernames = getUsernames(chat_, true);
+  //   var thumbnail = getThumbnail(chat_);
 
-    var li = renderChatListItem(usernames, msgPreview, thumbnail, chat_.id);
+  //   var li = renderChatListItem(usernames, msgPreview, thumbnail, chat_.id);
 
-    registerChatUser(chat_);
-    if (isActive(chat_)) setActive(li);
-    // don't move this down!
-    addNotification(li, chat_);
-    chatsHash[chat_.id] = chat_;
+  //   registerChatUser(chat_);
+  //   if (isActive(chat_)) setActive(li);
+  //   // don't move this down!
+  //   addNotification(li, chat_);
+  //   chatsHash[chat_.id] = chat_;
 
-    li.onclick = () => {
-      markAsRead(chat_.id, li);
-      setActive(li);
-      getChat(chat_.id);
-    }
-    selectors.usersList.appendChild(li);
-  })
+  //   li.onclick = () => {
+  //     markAsRead(chat_.id, li);
+  //     setActive(li);
+  //     getChat(chat_.id);
+  //   }
+  //   selectors.usersList.appendChild(li);
+  // })
 }
 
 function renderChatHeader(chat_) {
@@ -255,21 +255,23 @@ function renderChatHeader(chat_) {
   selectors.messagesTitle.appendChild(node);
 }
 
-function renderGroupChatHeader(chat_) {
+function renderGroupChatHeader (chat_) {
 
-    name = getUsernames(chat_);
+  name = getUsernames(chat_)
 
-    let node = document.createElement("span");
-    let nodeText = document.createTextNode(name);
-    node.appendChild(nodeText);
+  let node = document.createElement("span")
+  let nodeText = document.createTextNode(name)
+  node.appendChild(nodeText)
 
-    selectors.messagesTitle.innerHTML = '';
-    selectors.messagesTitle.appendChild(node);
-  }
+  selectors.messagesTitle.innerHTML = ''
+  selectors.messagesTitle.appendChild(node)
+}
 
 function renderChat (chat_) {
   if (window.chat.id !== chat_.id || chat_.id === DUMMY_CHAT_ID) {
     window.chat = chat_;
+    AppMessenger.activeChat = chat_
+    registerChatUser(chat_)
     selectors.messagesList.innerHTML = '';
     window.isGroupChat = chat_.accounts.length > 1;
   }
