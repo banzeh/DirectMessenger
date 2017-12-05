@@ -1,89 +1,96 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" type="text/css" href="css/style.css"> 
-  </head>
-  <body no-js on-click-remove-class=".dropdown active">
+<html lang="en">
 
-    <svg hidden>
-      <defs>
-        <symbol id="icon-like" viewBox="0 0 34 30">
-          <title>like</title>
-          <path d="M17.07,30.07 L16.4805729,29.5848522 C3.56740106,18.9542276 0.07,15.2120935 0.07,9.1335361 C0.07,4.13590432 4.0925635,0.07 9.03692262,0.07 C13.1689368,0.07 15.504554,2.44194668 17.07,4.2262352 C18.635446,2.44194668 20.9710632,0.07 25.1030774,0.07 C30.0474365,0.07 34.07,4.13590432 34.07,9.1335361 C34.07,15.2120935 30.5725989,18.9542276 17.6594271,29.5848522 L17.07,30.07 L17.07,30.07 Z"></path>
-        </symbol>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" type="text/css" href="dist/app.bundle.css">
+</head>
 
-        <symbol id="icon-menu" viewBox="0 0 24 14">
-          <title>menu</title>
-          <polygon id="Fill-19" points="0 0 24 0 24 2 0 2"></polygon>
-          <polygon id="Fill-20" points="0 6 24 6 24 8 0 8"></polygon>
-          <polygon id="Fill-21" points="0 12 24 12 24 14 0 14"></polygon>
-        </symbol>
-      </defs>
-    </svg>
+<body no-js on-click-remove-class=".dropdown active">
 
-    <div class="app">
-      <div class="app-dropdown">
-        <div class="app-dropdown__list">
-          <div class="app-dropdown__item" id="seen-flagger">Don't send "seen"</div>
-          <div class="app-dropdown__item" id="unfollowers">Users not following back</div>
-          <div class="app-dropdown__item" id="logout">Logout</div>
+  <svg hidden>
+    <defs>
+      <symbol id="icon-like" viewBox="0 0 34 30">
+        <title>like</title>
+        <path d="M17.07,30.07 L16.4805729,29.5848522 C3.56740106,18.9542276 0.07,15.2120935 0.07,9.1335361 C0.07,4.13590432 4.0925635,0.07 9.03692262,0.07 C13.1689368,0.07 15.504554,2.44194668 17.07,4.2262352 C18.635446,2.44194668 20.9710632,0.07 25.1030774,0.07 C30.0474365,0.07 34.07,4.13590432 34.07,9.1335361 C34.07,15.2120935 30.5725989,18.9542276 17.6594271,29.5848522 L17.07,30.07 L17.07,30.07 Z"></path>
+      </symbol>
+
+      <symbol id="icon-menu" viewBox="0 0 24 14">
+        <title>menu</title>
+        <polygon id="Fill-19" points="0 0 24 0 24 2 0 2"></polygon>
+        <polygon id="Fill-20" points="0 6 24 6 24 8 0 8"></polygon>
+        <polygon id="Fill-21" points="0 12 24 12 24 14 0 14"></polygon>
+      </symbol>
+    </defs>
+  </svg>
+
+  <div class="app">
+    <div class="app-dropdown">
+      <div class="app-dropdown__list">
+        <div class="app-dropdown__item" id="seen-flagger">Don't send "seen"</div>
+        <div class="app-dropdown__item" id="unfollowers">Users not following back</div>
+        <div class="app-dropdown__item" id="logout">Logout</div>
+      </div>
+    </div>
+    <side class="app-sidebar app__sidebar">
+      <div class="app-sidebar__header">
+        <div class="app-menu">
+          <svg>
+            <use xlink:href="#icon-menu"></use>
+          </svg>
+        </div>
+        <div class="app-search app__search">
+          <input class="app-search__input" type="text" name="search" placeholder="Search...">
         </div>
       </div>
-      <side class="app-sidebar app__sidebar">
-        <div class="app-sidebar__header">
-          <div class="app-menu">
-            <svg><use xlink:href="#icon-menu"></use></svg>
-          </div>
-          <div class="app-search app__search">
-            <input class="app-search__input" type="text" name="search" placeholder="Search...">
+      <div class="app-users">
+        <ul class="app-users__list">Loading users...</ul>
+      </div>
+    </side>
+    <div class="app-content app__content">
+      <div class="app-messages">
+        <div class="app-messages__header">
+          <div class="app-messages__title"></div>
+        </div>
+        <div class="app-messages__list">
+          <div class="app-preview">
+            <div class="app-preview__text">Please select a chat to start messaging</div>
           </div>
         </div>
-        <div class="app-users">
-          <ul class="app-users__list">Loading users...</ul>
-        </div>
-      </side>
-      <div class="app-content app__content">
-        <div class="app-messages">
-          <div class="app-messages__header">
-            <div class="app-messages__title"></div>
+        <div class="app-input">
+          <div class="app-input__inner">
+            <input type="text" class="app-input__control" placeholder="Type message here">
+            <div class="app-input__emoji" no-js on-click-toggle-class=".emojis hide">
+              <img src="img/smiley.png" width="20px">
+            </div>
           </div>
-          <div class="app-messages__list">
-            <div class="app-preview">
-              <div class="app-preview__text">Please select a chat to start messaging</div>
-            </div>
-          </div> 
-          <div class="app-input">
-            <div class="app-input__inner">
-              <input type="text" class="app-input__control" placeholder="Type message here">
-              <div class="app-input__emoji" no-js on-click-toggle-class=".emojis hide">
-                  <img src="img/smiley.png" width="20px">
-              </div>
-            </div>
-            <div class="emojis hide">
-              <div class="emojis-header"></div>
-              <div class="emojis-body"></div>
-            </div>
+          <div class="emojis hide">
+            <div class="emojis-header"></div>
+            <div class="emojis-body"></div>
           </div>
         </div>
       </div>
     </div>
+  </div>
 
-    <div class="container">
-      <div class="viewer">
-        <button class="close" no-js on-click-remove-class=".viewer active">
-          <img width="25px" src="img/close.png" alt="close icon">
-        </button>
-        <div class="content"></div>
-      </div>
+  <div class="container">
+    <div class="viewer">
+      <button class="close" no-js on-click-remove-class=".viewer active">
+        <img width="25px" src="img/close.png" alt="close icon">
+      </button>
+      <div class="content"></div>
     </div>
-  </body>
-  
-  <script type="text/javascript" src="http://nojs.io/release/0.1.1/no.min.js"></script>
-  <script type="text/javascript" src="js/globals.js"></script>
-  <script type="text/javascript" src="js/emoji.js"></script>
-  <script type="text/javascript" src="js/carousel.js"></script>
-  <script type="text/javascript" src="js/funcs.js"></script>
-  <script type="text/javascript" src="js/renderers.js"></script>
-  <script type="text/javascript" src="js/index.js"></script>
+  </div>
+</body>
+
+<script type="text/javascript" src="http://nojs.io/release/0.1.1/no.min.js"></script>
+<script type="text/javascript" src="js/globals.js"></script>
+<script type="text/javascript" src="js/emoji.js"></script>
+<script type="text/javascript" src="js/carousel.js"></script>
+<script type="text/javascript" src="js/funcs.js"></script>
+<script type="text/javascript" src="js/renderers.js"></script>
+<script type="text/javascript" src="js/index.js"></script>
+
 </html>

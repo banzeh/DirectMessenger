@@ -1,8 +1,8 @@
-const ipcRenderer = require('electron').ipcRenderer;
-const shell = require('electron').shell;
-const config = require('../config');
+const ipcRenderer = require('electron').ipcRenderer
+const shell = require('electron').shell
+const config = require('../config')
 
-window.AppLogin = new Vue({
+const AppLogin = new Vue({
   el: config.app.mountElement,
   data: {
     credentials: {
@@ -16,11 +16,10 @@ window.AppLogin = new Vue({
   },
 
   methods: {
-    login: function() {
-
+    login: function () {
       this.button = 'Please wait...'
 
-      if(this.credentials.username.length === 0 || this.credentials.username.length === 0) {
+      if (this.credentials.username.length === 0 || this.credentials.username.length === 0) {
         this.showError('Please enter all required fields')
       } else {
         ipcRenderer.send('login', {
@@ -28,24 +27,23 @@ window.AppLogin = new Vue({
           password: this.credentials.password
         })
       }
-
     },
 
-    showError: function(message) {
+    showError: function (message) {
       this.hideError()
 
       setTimeout(() => {
         this.error = true
         this.errorMessage = message
         this.button = 'Login'
-      }, 150);
+      }, 150)
     },
 
-    hideError: function() {
+    hideError: function () {
       this.error = false
     },
 
-    openLink: function(link) {
+    openLink: function (link) {
       shell.openExternal(link)
     }
   }
