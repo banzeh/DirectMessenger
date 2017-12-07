@@ -53,7 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
   })
 
   ipcRenderer.on('chatList', (evt, chats_) => {
-    if (!AppMessenger.chatsюlength || AppMessenger.chats[0].items[0].id !== chats_[0].items[0].id) {
+    if (!AppMessenger.chats.length || AppMessenger.chats[0].items[0].id !== chats_[0].items[0].id) {
       AppMessenger.chats = chats_
     }
   })
